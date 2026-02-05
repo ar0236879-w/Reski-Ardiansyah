@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reski Ardiansyah - Web Developer Portfolio</title>
+    <meta name="description" content="Portfolio Reski Ardiansyah, Web Developer Pelajar SMK.">
+    
+    <!-- Mengambil Font Premium: Inter (Sans-serif) & Playfair Display (Serif untuk kesan elegan) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #050505;
+            --grid-line: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+            --accent-red: #C62828; /* Merah Tua Elegan */
+            --accent-gold: #D4AF37; /* Emas Metalik */
+            --card-width: 320px;
+            --card-height: 480px;
+            --transition-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- BACKGROUND GRID --- */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; /* Font Serif untuk kesan Mewah */
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-red);
+            margin-top: 10px;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .highlight {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+        
+        .logo span { color: var(--accent-red); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text .role {
+            color: var(--accent-red);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: white;
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: #a31f1f;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-color);
+        }
+
+        /* --- 3D ID CARD CONTAINER --- */
+        .hero-visual {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px; /* Penting untuk efek 3D */
+        }
+
+        /* Kartu ID */
+        #interactive-card {
+            width: var(--card-width);
+            height: auto; /* Menyesuaikan aspek rasio gambar */
+            max-height: 500px;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+            transition: transform 0.1s linear; /* Update cepat saat drag */
+            user-select: none;
+            /* Bayangan dinamik diatur via JS */
+        }
+
+        #interactive-card:active {
+            cursor: grabbing;
+            transition: none; /* Hilangkan transisi saat drag untuk respons instan */
+        }
+
+        #interactive-card.releasing {
+            transition: transform 0.8s var(--transition-elastic); /* Efek pantul saat lepas */
+        }
+
+        .card-image {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px rgba(212, 175, 55, 0.3);
+            display: block;
+            /* Efek kilau halus di atas gambar */
+            position: relative;
+        }
+
+        .card-instruction {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .icon-drag {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent-gold);
+        }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 6rem 10%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- ABOUT ME --- */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-img-wrapper {
+            position: relative;
+            border: 2px solid var(--grid-line);
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .about-img-wrapper:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-red);
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 4px;
+            display: block;
+            filter: grayscale(40%);
+            transition: filter 0.3s;
+        }
+
+        .about-img-wrapper:hover .about-img {
+            filter: grayscale(0%);
+        }
+
+        .skills-list {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-gold);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        /* --- PORTFOLIO --- */
+        .disclaimer {
+            background: rgba(198, 40, 40, 0.1);
+            border-left: 4px solid var(--accent-red);
+            padding: 1rem;
+            margin-bottom: 3rem;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #ffcccc;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #0f0f0f;
+            border: 1px solid #222;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-red);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        /* --- CONTACT --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .contact-item {
+            background: #0f0f0f;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #222;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .contact-item a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            fill: var(--accent-red);
+            transition: fill 0.3s;
+        }
+
+        .contact-item:hover .contact-icon {
+            fill: var(--accent-gold);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #000;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-text h1 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .nav-links { display: none; } /* Sederhana untuk mobile */
+            #hero { padding-top: 6rem; }
+            
+            /* Scale kartu di layar kecil */
+            .hero-visual {
+                transform: scale(0.9);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Latar Belakang Grid -->
+    <div class="grid-bg"></div>
+
+    <!-- Navigasi -->
+    <nav>
+        <div class="logo">RESKI<span>.DEV</span></div>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+        <div class="hero-text">
+            <span class="role">Web Developer Pemula</span>
+            <h1>Halo, saya Reski Ardiansyah</h1>
+            <p>Saya menguasai HTML, CSS, dan JavaScript. Membangun antarmuka web modern dengan sentuhan interaktif dan elegan.</p>
+            
+            <div class="cta-group">
+                <a href="#portfolio" class="btn btn-primary">Lihat Proyek</a>
+                <a href="#contact" class="btn btn-outline">Hubungi Saya</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <!-- Interactive 3D ID Card -->
+            <!-- Menggunakan gambar ID Chart yang disediakan -->
+            <div id="interactive-card">
+                <img src="https://z-cdn-media.chatglm.cn/files/f340db07-9e54-4c19-9d81-f7e7e81527e2.png?auth_key=1870284114-64240a24cd604355aed7dbf3541e141d-0-c56de9bedf0474882a58beb4e8fae38e" alt="Reski Ardiansyah ID Card" class="card-image">
+            </div>
+            
+            <div class="card-instruction">
+                <svg class="icon-drag" viewBox="0 0 24 24"><path d="M13 6v5h5V6h-5zM9 11V6H4v5h5zm6 8v-5h-5v5h5zm-6 0v-5H4v5h5zM21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+                <span>Drag kartu untuk melihat efek 3D</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT ME SECTION -->
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Saya <span class="highlight">Reski Ardiansyah</span>, pelajar kelas 10 di SMK Negeri 3 Bantaeng jurusan Farmasi.</p>
+                <p>Meskipun jurusan saya di Farmasi, saya memiliki minat besar di bidang <strong>Web Development</strong> dan mampu membuat website serta game berbasis web menggunakan HTML, CSS, dan JavaScript.</p>
+                <p>Saya memiliki kemampuan public speaking yang cukup baik dan sedang terus melatih komunikasi karena saya merupakan <span class="highlight">Wakil Ketua OSIS</span> terpilih periode 2025/2026. Selain itu, saya aktif dalam organisasi OSIS, PMR, Sanggar Seni, dan Rohis.</p>
+                
+                <div class="skills-list">
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Public Speaking</span>
+                </div>
+            </div>
+            
+            <div class="about-img-wrapper">
+                <!-- Gambar Proses Belajar Coding -->
+                <img src="https://z-cdn-media.chatglm.cn/files/4e20f763-c2f0-4578-aa01-7a654de2c0ec.jpeg?auth_key=1870284114-20100a7619604349bcafa7e6fbf6e069-0-5d90d2bdd4e0fc20d6d2c8d32eeb9a86" alt="Proses Belajar Coding" class="about-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        
+        <div class="disclaimer">
+            "Saat ini website yang saya buat masih berfokus pada tiga unsur dasar utama yaitu HTML, CSS, dan JavaScript, tanpa pengelolaan database dan backend. Namun saya terus belajar secara otodidak dan meningkatkan kemampuan saya."
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="project-card">
+                <h3>Website Sederhana</h3>
+                <p>Layout responsif menggunakan HTML & CSS murni. Fokus pada semantic structure dan typography.</p>
+            </div>
+            <div class="project-card">
+                <h3>Web App JavaScript</h3>
+                <p>Aplikasi interaktif sederhana seperti Kalkulator dan Jam Digital menggunakan manipulasi DOM.</p>
+            </div>
+            <div class="project-card">
+                <h3>Game Berbasis Web</h3>
+                <p>Game 2D sederhana yang dibangun dengan HTML5 Canvas dan logika JavaScript game loop.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <div class="contact-container">
+            <div class="contact-item">
+                <a href="mailto:ar0236879@gmail.com">
+                    <!-- Icon Email SVG -->
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span>Email</span>
+                    <span style="font-size: 0.8rem; color: #888;">ar0236879@gmail.com</span>
+                </a>
+            </div>
+            <div class="contact-item">
+                <a href="https://instagram.com/ikky05__" target="_blank">
+                    <!-- Icon Instagram SVG -->
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+                    <span>Instagram</span>
+                    <span style="font-size: 0.8rem; color: #888;">@ikky05__</span>
+                </a>
+            </div>
+            <div class="contact-item">
+                <a href="https://wa.me/6285657398446" target="_blank">
+                    <!-- Icon WhatsApp SVG -->
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 17.75c-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.21 8.21 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24m4.52-6.17c-.25-.12-1.47-.73-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.65.81-.8.97-.15.17-.3.19-.55.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.48-1.38-1.73-.15-.25-.02-.38.11-.51.11-.11.25-.3.37-.45.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.77-1.84-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.48-.01-.17 0-.45.06-.68.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.32 3.81.6.26 1.07.42 1.44.53.61.19 1.17.17 1.61.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.07-.1-.24-.16-.5-.28z"/></svg>
+                    <span>WhatsApp</span>
+                    <span style="font-size: 0.8rem; color: #888;">+62 856-5739-8446</span>
+                </a>
+            </div>
+            <div class="contact-item">
+                <a href="https://github.com/ar0236879-w" target="_blank">
+                    <!-- Icon GitHub SVG -->
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                    <span>GitHub</span>
+                    <span style="font-size: 0.8rem; color: #888;">ar0236879-w</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Reski Ardiansyah. All Rights Reserved.</p>
+    </footer>
+
+    <!-- LOGIKA JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.getElementById('interactive-card');
+            
+            // Variabel Status
+            let isDragging = false;
+            let startX, startY;
+            let currentRotateX = 0;
+            let currentRotateY = 0;
+            let targetRotateX = 0;
+            let targetRotateY = 0;
+            
+            // Batasan rotasi (derajat)
+            const maxRotation = 20; 
+
+            // Fungsi Update Tampilan Kartu (Transform)
+            function updateCardTransform() {
+                // Menambahkan efek sedikit mengambang (translateZ) saat rotasi terjadi
+                // Menambahkan efek *tilt* berdasarkan posisi mouse relatif terhadap tengah
+                card.style.transform = `
+                    perspective(1000px) 
+                    rotateX(${currentRotateX}deg) 
+                    rotateY(${currentRotateY}deg)
+                    scale3d(1.02, 1.02, 1.02)
+                `;
+                
+                // Efek Shadow dinamis agar lebih realistis
+                // Shadow bergerak berlawanan arah rotasi
+                const shadowX = -currentRotateY * 1.5;
+                const shadowY = currentRotateX * 1.5;
+                card.querySelector('.card-image').style.boxShadow = `
+                    ${shadowX}px ${shadowY + 20}px 50px rgba(0,0,0,0.9), 
+                    0 0 0 1px rgba(212, 175, 55, 0.3)
+                `;
+            }
+
+            // --- Mouse Events ---
+            card.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                card.classList.remove('releasing'); // Hapus class animasi balik
+                startX = e.clientX;
+                startY = e.clientY;
+                card.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+
+                // Hitung jarak gerak mouse (delta)
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+
+                // Konversi delta menjadi rotasi (dibagi faktor sensitivitas)
+                // Rotasi Y berdasarkan gerakan X (kiri-kanan)
+                // Rotasi X berdasarkan gerakan Y (atas-bawah) -> dibalik agar natural
+                
+                // Kita mapping delta ke rotasi target
+                // Semakin jauh drag, semakin miring, tapi dibatasi maxRotation
+                const sensitivity = 15; // Semakin kecil, semakin sensitif
+                
+                // Menggunakan Math.min/max untuk membatasi rotasi
+                targetRotateY = Math.max(Math.min(deltaX / sensitivity, maxRotation), -maxRotation);
+                targetRotateX = Math.max(Math.min(-deltaY / sensitivity, maxRotation), -maxRotation);
+
+                // Terapkan langsung (real-time)
+                currentRotateX = targetRotateX;
+                currentRotateY = targetRotateY;
+                
+                updateCardTransform();
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    card.classList.add('releasing'); // Tambah class animasi balik (elastic)
+                    card.style.cursor = 'grab';
+                    
+                    // Reset rotasi ke 0
+                    currentRotateX = 0;
+                    currentRotateY = 0;
+                    updateCardTransform();
+                }
+            });
+
+            // --- Touch Events (Mobile) ---
+            card.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                card.classList.remove('releasing');
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                // Mencegah scroll saat drag kartu agar user experience lebih baik
+                e.preventDefault(); 
+            }, { passive: false });
+
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                
+                const deltaX = e.touches[0].clientX - startX;
+                const deltaY = e.touches[0].clientY - startY;
+                
+                const sensitivity = 15;
+                
+                targetRotateY = Math.max(Math.min(deltaX / sensitivity, maxRotation), -maxRotation);
+                targetRotateX = Math.max(Math.min(-deltaY / sensitivity, maxRotation), -maxRotation);
+
+                currentRotateX = targetRotateX;
+                currentRotateY = targetRotateY;
+                
+                updateCardTransform();
+            }, { passive: false });
+
+            document.addEventListener('touchend', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    card.classList.add('releasing');
+                    
+                    currentRotateX = 0;
+                    currentRotateY = 0;
+                    updateCardTransform();
+                }
+            });
+
+            // --- Efek Hover Halus (Tilt) Saat Tidak Di-Drag (Desktop Only) ---
+            // Ini memberikan efek "hidup" halus saat mouse lewat tanpa klik
+            card.addEventListener('mousemove', (e) => {
+                if (isDragging) return; // Abaikan jika sedang drag
+
+                const rect = card.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
+
+                // Rotasi sangat halus berdasarkan posisi di dalam kartu
+                const rotateY = (mouseX / rect.width) * 10; // Max 5 deg
+                const rotateX = -(mouseY / rect.height) * 10;
+
+                // Animasi halus menggunakan CSS transition jika tidak drag
+                card.style.transition = "transform 0.1s ease-out";
+                card.style.transform = `
+                    perspective(1000px) 
+                    rotateX(${rotateX}deg) 
+                    rotateY(${rotateY}deg)
+                `;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (isDragging) return;
+                // Reset saat mouse keluar area kartu
+                card.style.transition = "transform 0.5s var(--transition-elastic)";
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+                // Reset shadow
+                card.querySelector('.card-image').style.boxShadow = `0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px rgba(212, 175, 55, 0.3)`;
+            });
+        });
+    </script>
+</body>
+</html>
